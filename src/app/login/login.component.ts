@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { AuthConfig } from './../models/auth-config.model';
 
 import { environment } from '@env/environment';
-import { Logger, I18nService, AuthenticationService, untilDestroyed } from '@app/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Logger, AuthenticationService, CredentialsService } from '@app/core';
 
 const log = new Logger('Login');
 
@@ -14,65 +14,32 @@ const log = new Logger('Login');
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  version: string | null = environment.version;
-  error: string | undefined;
-  loginForm!: FormGroup;
-  isLoading = false;
-
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private i18nService: I18nService,
-    private authenticationService: AuthenticationService
-  ) {
-    this.createForm();
-  }
+    private authenticationService: AuthenticationService,
+    private tokenSvc: CredentialsService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
   ngOnDestroy() {}
 
-  login() {
-    this.isLoading = true;
-    const login$ = this.authenticationService.login(this.loginForm.value);
-    login$
-      .pipe(
-        finalize(() => {
-          this.loginForm.markAsPristine();
-          this.isLoading = false;
-        }),
-        untilDestroyed(this)
-      )
-      .subscribe(
-        credentials => {
-          log.debug(`${credentials.username} successfully logged in`);
-          this.router.navigate([this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
-        },
-        error => {
-          log.debug(`Login error: ${error}`);
-          this.error = error;
-        }
-      );
-  }
-
-  setLanguage(language: string) {
-    this.i18nService.language = language;
-  }
-
-  get currentLanguage(): string {
-    return this.i18nService.language;
-  }
-
-  get languages(): string[] {
-    return this.i18nService.supportedLanguages;
-  }
-
-  private createForm() {
-    this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      remember: true
-    });
+  public login(): void {
+    const ac: AuthConfig = {
+      client_id: environment.spotifyClientId,
+      response_type: 'token',
+      redirect_uri: encodeURIComponent(environment.redirect_uri),
+      state: '',
+      show_dialog: true,
+      scope: [
+        'user-read-private',
+        'user-read-email',
+        'user-library-read',
+        'user-follow-read',
+        'playlist-read-private',
+        'playlist-read-collaborative'
+      ]
+    };
+    this.authenticationService.configure(ac).authorize();
   }
 }

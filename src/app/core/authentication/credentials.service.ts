@@ -1,3 +1,5 @@
+import { SpotifyAuthResponse } from './../../models/auth-response.model';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 export interface Credentials {
@@ -16,47 +18,35 @@ const credentialsKey = 'credentials';
   providedIn: 'root'
 })
 export class CredentialsService {
-  private _credentials: Credentials | null = null;
+  private token = '';
+  private token$ = new BehaviorSubject(this.token);
+  constructor() {}
 
-  constructor() {
-    const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
-    if (savedCredentials) {
-      this._credentials = JSON.parse(savedCredentials);
-    }
+  public get oAuthToken(): string {
+    return this.token;
   }
 
-  /**
-   * Checks is the user is authenticated.
-   * @return True if the user is authenticated.
-   */
-  isAuthenticated(): boolean {
-    return !!this.credentials;
+  public clearToken(): void {
+    this.token = '';
+    this.token$.next(this.token);
   }
 
-  /**
-   * Gets the user credentials.
-   * @return The user credentials or null if the user is not authenticated.
-   */
-  get credentials(): Credentials | null {
-    return this._credentials;
+  public get authHeader(): { [name: string]: string } {
+    return this.token ? { Authorization: `Bearer ${this.token}` } : {};
   }
 
-  /**
-   * Sets the user credentials.
-   * The credentials may be persisted across sessions by setting the `remember` parameter to true.
-   * Otherwise, the credentials are only persisted for the current session.
-   * @param credentials The user credentials.
-   * @param remember True to remember credentials across sessions.
-   */
-  setCredentials(credentials?: Credentials, remember?: boolean) {
-    this._credentials = credentials || null;
+  public get authTokens(): Observable<string> {
+    return this.token$.asObservable();
+  }
 
-    if (credentials) {
-      const storage = remember ? localStorage : sessionStorage;
-      storage.setItem(credentialsKey, JSON.stringify(credentials));
+  public setAuthToken(spotifyResponse: SpotifyAuthResponse): boolean {
+    if (!!spotifyResponse && !!spotifyResponse.access_token) {
+      this.token = spotifyResponse.access_token;
+      localStorage.setItem('token', JSON.stringify(spotifyResponse));
     } else {
-      sessionStorage.removeItem(credentialsKey);
-      localStorage.removeItem(credentialsKey);
+      this.token = '';
     }
+    this.token$.next(this.token);
+    return !!this.token;
   }
 }

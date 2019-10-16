@@ -2,3 +2,8 @@
  * Global application theme.
  * Framework overrides and customization goes here.
  */
+
+@import "./globals.scss";
+
+@import "./components/buttons.scss";
+@import "./components/playlist-card.scss";

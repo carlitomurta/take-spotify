@@ -14,7 +14,10 @@ export const environment = {
   production: false,
   hmr: true,
   version: env.npm_package_version + '-dev',
-  serverUrl: '/api',
+  spotifyClientId: '91b881e1d9a24bdbb826b2e581b542e7',
+  redirect_uri: 'http://localhost:4200/profile',
+  authUrl: 'https://accounts.spotify.com/authorize',
+  serverUrl: 'https://api.spotify.com/v1/',
   defaultLanguage: 'en-US',
   supportedLanguages: ['en-US', 'fr-FR']
 };

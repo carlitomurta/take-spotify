@@ -1,0 +1,85 @@
+@import "src/theme/theme-variables.scss";
+.container-fluid {
+  background: $gray-900;
+  background: linear-gradient(180deg, rgba(33, 33, 33, 1) 0%, rgba(18, 18, 18, 1) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  @media (max-height: 600px) {
+    height: 100%;
+  }
+}
+.spotify-logo {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  z-index: 9;
+}
+.left {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 350px;
+  height: 100%;
+  background-color: $black;
+  z-index: 1;
+  .pl-card {
+    margin-top: 126px;
+  }
+}
+.right {
+  padding: 40px;
+  margin-left: 350px;
+}
+.profile {
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    margin-right: 16px;
+  }
+}
+.back-icon {
+  background-color: $green;
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+}
+.search-input {
+  border: 0;
+  background-color: $black;
+  height: 64px;
+  padding: 8px 24px;
+  width: 100%;
+  color: $white;
+  font-size: 24px;
+  text-transform: uppercase;
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+}
+.track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  .status {
+    width: 8px;
+    height: 8px;
+    background-color: $green;
+    border-radius: 100%;
+    margin: 8px;
+  }
+  .name {
+    font-size: 20px;
+    line-height: 20px;
+  }
+  .author {
+    font-size: 16px;
+    line-height: 16px;
+    color: $light;
+  }
+  .duration {
+    color: $light;
+  }
+}

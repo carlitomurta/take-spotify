@@ -1,0 +1,22 @@
+@import "src/theme/theme-variables.scss";
+.container-fluid {
+  background: $gray-900;
+  background: linear-gradient(180deg, rgba(33, 33, 33, 1) 0%, rgba(18, 18, 18, 1) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  @media (max-height: 600px) {
+    height: 100%;
+  }
+}
+.profile {
+  text-align: center;
+  img {
+    width: 132px;
+    height: 132px;
+    border-radius: 100%;
+    margin-bottom: 24px;
+  }
+  p {
+    margin-bottom: 56px;
+  }
+}

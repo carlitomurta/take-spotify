@@ -1,0 +1,18 @@
+@import "../theme-variables.scss";
+.pl-card {
+  text-align: center;
+  .pl-img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 16px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  h4 {
+    font-size: 20px;
+    line-height: 18px;
+  }
+  p {
+    color: $light;
+  }
+}

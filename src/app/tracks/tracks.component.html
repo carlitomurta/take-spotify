@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <div class="spotify-logo">
+    <img src="assets/spotify_logo.png" />
+  </div>
+  <div class="left">
+    <div class="pl-card">
+      <img class="pl-img" draggable="false" [src]="(playlist?.images)[0].url" />
+      <h4>{{ playlist?.name }}</h4>
+      <p>{{ playlist?.tracks.total }} musics</p>
+    </div>
+  </div>
+  <div class="right">
+    <div class="row">
+      <div class="col-lg-8">
+        <button type="button" class="btn back-icon mb-5" (click)="back()"><</button>
+        <input class="search-input mb-5" type="text" placeholder="Pesquisar..." [(ngModel)]="search" />
+        <div class="track" *ngFor="let track of tracks">
+          <div class="d-flex">
+            <div class="status"></div>
+            <div>
+              <h4 class="name">{{ track.name }}</h4>
+              <p class="author">{{ track.artists[0].name }}</p>
+            </div>
+          </div>
+          <p class="duration">{{ track.duration_ms }}</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="profile">
+          <div class="d-flex align-items-center">
+            <img [src]="(profile?.images)[0].url" />
+            <div>
+              <h2>{{ profile?.display_name }}</h2>
+              <p>{{ profile?.display_name }}&nbsp;|&nbsp;followers: {{ profile?.followers.total }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

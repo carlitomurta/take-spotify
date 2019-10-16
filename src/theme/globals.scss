@@ -1,0 +1,45 @@
+@import "./theme-variables.scss";
+@font-face {
+  font-family: "Circular";
+  src: url("assets/fonts/CircularStd-Book.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Circular";
+  src: url("assets/fonts/CircularStd-Bold.otf") format("truetype");
+  font-weight: bold;
+}
+*,
+*:before,
+*:after {
+  -webkit-border-sizing: border-box;
+  -moz-border-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  background: $gray-900;
+  background: linear-gradient(180deg, rgba(33, 33, 33, 1) 0%, rgba(18, 18, 18, 1) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Circular", sans-serif !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  color: $white;
+  height: 100%;
+  width: 100%;
+}
+.spotify-logo {
+  img {
+    width: 56px;
+    height: 56px;
+  }
+}
+.container-fluid {
+  padding: 32px;
+}
+a {
+  text-decoration: none !important;
+  color: $white !important;
+}
